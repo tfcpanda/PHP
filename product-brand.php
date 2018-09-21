@@ -50,7 +50,24 @@
 				</form>				
 			</div>
 			
-			
+			<?php
+				error_reporting(E_ALL ^ E_DEPRECATED);
+				$con=mysql_connect('localhost','root','236598');
+				mysql_select_db('store');
+				mysql_query("set names utf8"); //设置字符集为utf8
+				$sql="select * from beverage";
+				$result=mysql_query($sql);
+				$count=mysql_num_rows($result); //记录总条数$count。
+				$pagesize=5;//每页要显示的记录条数$pagesize
+				if ($count%$pagesize==0) $pagecount=$count/$pagesize;else $pagecount=(int)($count/$pagesize+1); //总页数$pagecount
+				$row=mysql_fetch_assoc($result); //数组$row的键名为字段名
+				$page=@$_REQUEST["page"];  //欲显示的页数$page
+if ($page==null) $currentpage=1;else $currentpage=intval($page);
+for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记录 
+{  if (!$row) break;
+   $row=mysql_fetch_assoc($result); 
+}
+			?>
 			<!--表单开头-->
 			<div class="mt-10">
 				<table class="table table-border table-bordered table-bg table-sort">
@@ -58,7 +75,7 @@
 						<tr class="text-c">
 							<th width="25"><input type="checkbox" name="" value=""></th>
 							<th width="70">ID</th>
-							<th width="80">饮料名称</th>
+							<th width="100">饮料名称</th>
 							<th width="200">所属公司</th>
 							<th width="120">价格</th>
 							<th width="120">所属国家</th>
@@ -67,22 +84,55 @@
 						</tr>
 					</thead>
 					<tbody>
+						 <?php
+		for($i=1;$i<=$pagesize;$i++)
+		{  if (!$row) break;		
+    ?> 
 						<tr class="text-c">
 							<td><input name="" type="checkbox" value=""></td>
-							<td>1</td>
-							<td>东方树叶</td>
-							<td>中国</td>
-							<td class="text-l"><img src=""> 东鹏</td>
-							<td class="text-l">百世可乐</td>
+							<td><?php echo $row["beverageId"]; ?></td>
+							<td><?php echo $row["beverageName"]; ?></td>
+							<td><?php echo $row["beverageMark"]; ?></td>
+							<td><?php echo $row["beveragePrice"]; ?></td>
+							<td><?php echo $row["country"]; ?></td>
 							<th>图片</th>
+
+
 							<td class="f-14 product-brand-manage">
 								<a style="text-decoration:none" title="编辑">
 									<i class="Hui-iconfont">&#xe6df;</i></a> 
 							    <a style="text-decoration:none" title="删除">
 							 		<i class="Hui-iconfont">&#xe6e2;</i></a>
-							 </td>
+							</td>
+							<?php
+		    $row=mysql_fetch_assoc($result); 
+		}
+	?>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td height="25" colspan="8" align="center" class="text-c">
+						第<?php echo $currentpage;?>页/共<?php echo $pagecount;?>页 &nbsp;&nbsp;
+						<?php
+	  						if ($currentpage==1)  echo "首 页 | 上一页 | ";
+	 						else
+    					{?>
+							<a href="product-brand.php?page=1">首 页</a> | 
+							<a href="product-brand.php?page=<?php echo $currentpage-1;?>">上一页</a> |	
+						<?php
+	 		 					}	  	
+	  						if ($currentpage==$pagecount) echo "下一页 | 尾 页";
+	  						else
+	 					 {?>									
+						<a href="product-brand.php?page=<?php echo $currentpage+1;?>">下一页</a> | 
+							<a href="product-brand.php?page=<?php echo $pagecount;?>">尾 页</a>
+       					 <?php
+	 							 }
+	 					 ?>
+							</td>						
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</article>

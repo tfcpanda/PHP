@@ -5,36 +5,101 @@
 <link href="lib/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+	<?php
+    error_reporting(E_ALL ^ E_DEPRECATED);
+    $con=mysql_connect('localhost','root','236598');  
+    mysql_query("set names utf8");
+    $com=mysql_select_db('store');  
+    if (isset($_REQUEST["submit"])) {
+      $test = 1;
+      $beverageId = $_REQUEST["beverageId"];
+      $beverageName = $_REQUEST["beverageName"];
+      $beverageMark = $_REQUEST["beverageMark"];
+      $beveragePrice = $_REQUEST["beveragePrice"];
+      $country = $_REQUEST["country"];
+      //图书编号验证
+      // if($bookId == "") {
+      //   $bookId1 = "必须输入";
+      //   $test = 0;
+      // }else{
+      //   $lol="select * from book where 书籍ID=$bookId";
+      //   $zt=mysql_query($lol);
+      //   if(mysql_num_rows($zt)>0) {
+      //   $test = 0;
+      //   $bookId1="编号重复";
+      //   }
+      // }
+      
+      // //图书名字的验证
+      // if ($bookName == "") {
+      //   $bookName1 = "必须输入书名！";
+      //   $test = 0;
+      // }
+      // //出版社的验证
+      // if ($publish == "") {
+      //   $publish1 = "必须输入出版社！";
+      //   $test = 0;
+      // }
+      // //作者的验证
+      // if ($author == "") {
+      //   $author1 = "必须输入作者！";
+      //   $test = 0;
+      // }
+      // //在馆数量验证
+      // if ($number == "") {
+      //   $number1 = "必须输入数量";
+      //   $test = 0;
+      // }elseif (preg_match('/^([1-9][0-9]*)$/', $number)==0) {
+      //   $number1="必须为整数";$test=0;
+      // } 
+    //   if($test==1) {
+    //   $sql="insert into book values($bookId,'$bookName','$publish','$author',$number)";
+    //   $zt=mysql_query($sql);  
+    // if ($zt) {
+    //   echo "<script>alert('插入成功')</script>";
+    // }else{
+    //   echo "插入不成功！";
+    // }
+    //   }
+ $sql="insert into beverage values($beverageId,'$beverageName','$beverageMark',beveragePrice,'$country','')";
+       $zt=mysql_query($sql);  
+       if ($zt) {
+        header("Location:product-brand.php");
+     }else{
+       echo "插入不成功！";
+     }
+    }
+  ?>
 <div class="page-container">
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>饮料ID：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" placeholder="输入ID" name="beverageId">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">饮料名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="" name="">
+				<input type="text" class="input-text" value="" placeholder="输入饮料名称" id="" name="beverageName">
 			</div>
 		</div>	
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">供应公司：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
+				<input type="text" name="beverageMark" placeholder="输入供应公司" value="" class="input-text">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">价格：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
+				<input type="text" name="beveragePrice" placeholder="输入价格" value="" class="input-text">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">所属国家：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="" id="" placeholder="" value="" class="input-text">
+				<input type="text" name="country" placeholder="输入所属国家" value="" class="input-text">
 			</div>
 		</div>
 		
@@ -62,7 +127,7 @@
 		</div>	
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button class="btn btn-primary radius" type="submit">
+				<button class="btn btn-primary radius" type="submit" name="submit">
                     <i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
 				<button class="btn btn-secondary radius" type="button">
                     <i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
