@@ -1,4 +1,4 @@
-﻿<!--_meta -->
+<!--_meta -->
 <?php include './public/meta.php'; ?>
 <!--/meta -->
 
@@ -25,18 +25,22 @@
 		<!--nav表头结束-->
 	<div class="Hui-article">
 		<article class="cl pd-20">
+			<form method="post">
 			<div class="text-c cl pd-5 bg-1 bk-gray mt-20">				
-				<form class="Huiform" method="post" action="" target="_self">
+			
 				<!--批量删除开始-->
-				<span class="l"><a class="btn btn-danger radius">
-				<i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+				<span class="l">
+					
+	<input type="submit" class="btn btn-danger radius" value="批量删除" name="delete">
+				
+					
 				</span>
 				<!--批量删除结束-->
 				<!--查询文本输入框-->					
-				<input type="text" name="" class="input-text" style="width:240px;">
+				<input type="text" name="keyword" class="input-text" style="width:240px;">
 				<!--查询文本输入框-->	
 				<!--查询按钮-->
-				<button type="button" class="btn btn-success" name="">
+				<button type="submit" class="btn btn-success" name="search">
 				查询</button>
 				<!--按钮结束-->
 				<!--添加按钮-->	
@@ -47,9 +51,30 @@
 					</a>
 				</span> 
 				<!--添加按钮结束-->
-				</form>				
+					
 			</div>
-			
+			<!-- <?php
+				error_reporting(E_ALL ^ E_DEPRECATED);
+				$con=mysql_connect('localhost','root','236598');
+				mysql_select_db('store');
+				mysql_query("set names utf8"); //设置字符集为utf8
+				 
+			?> -->
+
+			<?php
+				if (isset($_POST["delete"])) {
+				error_reporting(E_ALL ^ E_DEPRECATED);
+				$con=mysql_connect('localhost','root','236598');
+				mysql_select_db('store');
+				mysql_query("set names utf8"); //设置字符集为utf8
+    			 $deleteId = $_REQUEST["SC"];   				 	
+     			  for ($i=0; $i < count($deleteId); $i++) {    			     
+     		 	  $sql = "delete from beverage where beverageId = $deleteId[$i]";
+     		  	 	$zt=mysql_query($sql);     		       			
+   				   }
+				}
+			?>
+
 			<?php
 				error_reporting(E_ALL ^ E_DEPRECATED);
 				$con=mysql_connect('localhost','root','236598');
@@ -62,18 +87,36 @@
 				if ($count%$pagesize==0) $pagecount=$count/$pagesize;else $pagecount=(int)($count/$pagesize+1); //总页数$pagecount
 				$row=mysql_fetch_assoc($result); //数组$row的键名为字段名
 				$page=@$_REQUEST["page"];  //欲显示的页数$page
-if ($page==null) $currentpage=1;else $currentpage=intval($page);
-for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记录 
-{  if (!$row) break;
-   $row=mysql_fetch_assoc($result); 
-}
+				if ($page==null) $currentpage=1;else $currentpage=intval($page);
+					for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记录 
+						{  if (!$row) break;
+   							$row=mysql_fetch_assoc($result); 
+						}
+
+						if (isset($_REQUEST["search"])) {
+ 		  $keyword = $_REQUEST["keyword"];  		 
+ 		 $sql="SELECT * FROM beverage WHERE beverageName like '%".$keyword."%'";
+		$result=mysql_query($sql);		
+			$count=mysql_num_rows($result); //记录总条数$count。
+		$pagesize=5;//每页要显示的记录条数$pagesize
+		if ($count%$pagesize==0) $pagecount=$count/$pagesize;else $pagecount=(int)($count/$pagesize+1); //总页数$pagecount
+		$row=mysql_fetch_assoc($result); //数组$row的键名为字段名
+  
+		$page=@$_REQUEST["page"];  //欲显示的页数$page
+		if ($page==null) $currentpage=1;else $currentpage=intval($page);
+		for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记录 
+		{  if (!$row) break;
+   	$row=mysql_fetch_assoc($result); 
+   }
+ }
 			?>
 			<!--表单开头-->
 			<div class="mt-10">
+				
 				<table class="table table-border table-bordered table-bg table-sort">
 					<thead>
 						<tr class="text-c">
-							<th width="25"><input type="checkbox" name="" value=""></th>
+							<th width="25"><input type="checkbox" name="SC[]" value=""></th>
 							<th width="70">ID</th>
 							<th width="100">饮料名称</th>
 							<th width="200">所属公司</th>
@@ -85,29 +128,35 @@ for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记
 					</thead>
 					<tbody>
 						 <?php
-		for($i=1;$i<=$pagesize;$i++)
-		{  if (!$row) break;		
-    ?> 
+							for($i=1;$i<=$pagesize;$i++)
+								{  if (!$row) break;		
+   						 ?> 
 						<tr class="text-c">
-							<td><input name="" type="checkbox" value=""></td>
-							<td><?php echo $row["beverageId"]; ?></td>
+					<td><input name="SC[]" type="checkbox" value="<?php echo $row["beverageId"];?>"></td>
+							<?php
+							$ID = $row["beverageId"];
+							echo "<td>$ID</td>"
+							?>							
 							<td><?php echo $row["beverageName"]; ?></td>
 							<td><?php echo $row["beverageMark"]; ?></td>
 							<td><?php echo $row["beveragePrice"]; ?></td>
 							<td><?php echo $row["country"]; ?></td>
-							<th>图片</th>
+							<th><a href="picture-show.php"><?php echo "点击查看图片：".$row["beverageName"]; ?></a></th>
+
+							<!--<th><?php echo "<img src='".$row['photo']."'/>"; ?></th>-->
 
 
 							<td class="f-14 product-brand-manage">
-								<a style="text-decoration:none" title="编辑">
-									<i class="Hui-iconfont">&#xe6df;</i></a> 
-							    <a style="text-decoration:none" title="删除">
-							 		<i class="Hui-iconfont">&#xe6e2;</i></a>
+								<a style="text-decoration:none" href="product-edit.php?no=<?php echo $ID; ?>" title="编辑">
+								<i class="Hui-iconfont">&#xe6df;</i></a> 
+
+							    <a style="text-decoration:none" href="product-delete.php?no=<?php echo $ID; ?>" title="删除">
+							 <i class="Hui-iconfont">&#xe6e2;</i></a>
 							</td>
 							<?php
-		    $row=mysql_fetch_assoc($result); 
-		}
-	?>
+		  						  $row=mysql_fetch_assoc($result); 
+								}
+							?>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -134,7 +183,9 @@ for($i=1;$i<=($currentpage-1)*$pagesize;$i++) //指定每一页面显示20条记
 						</tr>
 					</tfoot>
 				</table>
+				
 			</div>
+			</form>
 		</article>
 	</div>
 </section>
