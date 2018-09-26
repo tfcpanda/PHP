@@ -53,13 +53,7 @@
 				<!--添加按钮结束-->
 					
 			</div>
-			<!-- <?php
-				error_reporting(E_ALL ^ E_DEPRECATED);
-				$con=mysql_connect('localhost','root','236598');
-				mysql_select_db('store');
-				mysql_query("set names utf8"); //设置字符集为utf8
-				 
-			?> -->
+		
 
 			<?php
 				if (isset($_POST["delete"])) {
@@ -141,9 +135,9 @@
 							<td><?php echo $row["beverageMark"]; ?></td>
 							<td><?php echo $row["beveragePrice"]; ?></td>
 							<td><?php echo $row["country"]; ?></td>
-							<th><a href="picture-show.php"><?php echo "点击查看图片：".$row["beverageName"]; ?></a></th>
+						   <!--  <th><a href="picture-show.php"><?php echo "点击查看图片：".$row["beverageName"]; ?></a></th> -->
 
-							<!--<th><?php echo "<img src='".$row['photo']."'/>"; ?></th>-->
+							<th><?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?></th> 
 
 
 							<td class="f-14 product-brand-manage">

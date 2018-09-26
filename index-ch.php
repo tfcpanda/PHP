@@ -76,7 +76,7 @@ $(function(){
           $con=mysql_connect('localhost','root','236598');
           mysql_select_db('store');
           mysql_query("set names utf8"); //设置字符集为utf8
-          $sql="select * from beverage";
+          $sql="select * from beverage WHERE country='中国'";
           $result=mysql_query($sql);
           $count=mysql_num_rows($result);
           $row=mysql_fetch_assoc($result); 
@@ -90,10 +90,10 @@ $(function(){
     <div class="item">
       <a href="images/gallery/big.jpg">
         <span>         
-         <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?>
-        </span>
-         <?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?>
-                 
+             <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?>  
+        </span> 
+       
+        <?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?>      
       </a>
     </div>
       <?php
@@ -104,7 +104,7 @@ $(function(){
   <div id="description">
     <ul>
        <?php       
-        $sql="select * from beverage";
+        $sql="select * from beverage WHERE country='中国'";
         $result=mysql_query($sql);
         $count=mysql_num_rows($result);
         $row=mysql_fetch_assoc($result); 

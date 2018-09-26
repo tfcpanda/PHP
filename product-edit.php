@@ -61,7 +61,7 @@
     //   echo "插入不成功！";
     // }
     //   }
- $sql="update beverage set beverageName='$beverageName',beverageMark='$beverageMark',beveragePrice='$beveragePrice',country='$country',photo='' WHERE beverageId='$beverageId'";
+ $sql="update beverage set beverageName='$beverageName',beverageMark='$beverageMark',beveragePrice='$beveragePrice',country='$country' WHERE beverageId='$beverageId'";
        $zt=mysql_query($sql);  
        if ($zt) {
         header("Location:product-brand.php");
