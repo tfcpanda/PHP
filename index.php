@@ -85,12 +85,12 @@ $(function(){
             for($i=1;$i<=$count;$i++)
                 {  
                   if (!$row) break;
-                    $middle = rand(1,29);
+                    $middle = rand(1,20);
                ?> 
     <div class="item">
       <a href="images/gallery/big.jpg">
         <span>         
-        <!--  <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?> -->
+       <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?> 
         </span>
          <?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?>
                  
@@ -114,7 +114,7 @@ $(function(){
                ?> 
       <li>
         <h4><?php echo $row["beverageName"]; ?></h4>
-        <p>测试</p>
+        <p></p>
       </li>
        <?php
         $row=mysql_fetch_assoc($result); 

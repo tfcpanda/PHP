@@ -49,10 +49,6 @@
 						<td>美国饮料页</td>
 			</tr>
 			<tr>
-						<td>picture-show.php</td>
-						<td></td>
-			</tr>
-			<tr>
 						<td>product-add.php</td>
 						<td>商品添加页面</td>
 			</tr>

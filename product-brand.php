@@ -135,7 +135,7 @@
 							<td><?php echo $row["beverageMark"]; ?></td>
 							<td><?php echo $row["beveragePrice"]; ?></td>
 							<td><?php echo $row["country"]; ?></td>
-						   <!--  <th><a href="picture-show.php"><?php echo "点击查看图片：".$row["beverageName"]; ?></a></th> -->
+						    <!-- <th><a href="picture-show.php"><?php echo "点击查看图片：".$row["beverageName"]; ?></a></th>  -->
 
 							<th><?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?></th> 
 
