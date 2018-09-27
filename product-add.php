@@ -18,21 +18,60 @@
       $beverageMark = $_REQUEST["beverageMark"];
       $beveragePrice = $_REQUEST["beveragePrice"];
       $country = $_REQUEST["country"];
-
-      $filename = $_FILES['myFile']['name'];
-      $filename = iconv("UTF-8", "GB2312", $filename);  
-      $tmp_filename = $_FILES['myFile']['tmp_name'];
-     if (move_uploaded_file($tmp_filename, "upload/$filename")) {
-      echo "文件名称：".$_FILES['myFile']['name']."<br>";
-      echo "文件类型：".$_FILES['myFile']['type']."<br>";
-      echo "文件大小：".$_FILES['myFile']['size']."<br>";
-    }
+       //图书编号验证
+      // if($bookId == "") {
+      //   $bookId1 = "必须输入";
+      //   $test = 0;
+      // }else{
+      //   $lol="select * from book where 书籍ID=$bookId";
+      //   $zt=mysql_query($lol);
+      //   if(mysql_num_rows($zt)>0) {
+      //   $test = 0;
+      //   $bookId1="编号重复";
+      //   }
+      // }
+      
+      // //图书名字的验证
+      // if ($bookName == "") {
+      //   $bookName1 = "必须输入书名！";
+      //   $test = 0;
+      // }
+      // //出版社的验证
+      // if ($publish == "") {
+      //   $publish1 = "必须输入出版社！";
+      //   $test = 0;
+      // }
+      // //作者的验证
+      // if ($author == "") {
+      //   $author1 = "必须输入作者！";
+      //   $test = 0;
+      // }
+      // //在馆数量验证
+      // if ($number == "") {
+      //   $number1 = "必须输入数量";
+      //   $test = 0;
+      // }elseif (preg_match('/^([1-9][0-9]*)$/', $number)==0) {
+      //   $number1="必须为整数";$test=0;
+      // } 
+    //   if($test==1) {
+    //   $sql="insert into book values($bookId,'$bookName','$publish','$author',$number)";
+    //   $zt=mysql_query($sql);  
+    // if ($zt) {
+    //   echo "<script>alert('插入成功')</script>";
+    // }else{
+    //   echo "插入不成功！";
+    // }
+    //   }
+   	//传递文件名
+      session_start();
+      $filename=  $_SESSION['val'];    //直接输出全局变量val.
+	  
       $sql="insert into beverage values($beverageId,'$beverageName','$beverageMark',$beveragePrice,'$country','upload/".$filename."')";
        $zt=mysql_query($sql);  
        if ($zt) {
      
         header("Location:product-brand.php");
-     }else{
+     }else{   
        echo "插入不成功！";
      }
     }
@@ -75,12 +114,14 @@
 			<label class="form-label col-xs-4 col-sm-2">图片上传：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<div class="uploader-list-container">
+
 					<div class="queueList">
 						<div id="dndArea" class="placeholder">
 							<div id="filePicker-2"></div>
 							<p>或将照片拖到这里，单次最多可选300张</p>
 						</div>
 					</div>
+
 					<div class="statusBar" style="display:none;">
 						<div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
 						<div class="info"></div>
@@ -89,13 +130,10 @@
 							<div class="uploadBtn">开始上传</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>	
-    <!--简陋版上传-->
-      <input type="file" name="myFile">
- 
-
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
 				<button class="btn btn-primary radius" type="submit" name="submit">
@@ -110,10 +148,11 @@
 </div>
 
 <!--_footer 作为公共模版分离出去-->
-<?php include './public/footer.php'; ?>
+ <?php include './public/footer.php'; ?> 
 <!--/_footer /作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
 <?php include './public/upload.php'; ?>
+
 </body>
 </html>

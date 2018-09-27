@@ -90,7 +90,7 @@ $(function(){
     <div class="item">
       <a href="images/gallery/big.jpg">
         <span>         
-             <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?>  
+             <!-- <?php echo "<img src='".$first.$middle.$last."' width='240' height='240'/>"; ?>   -->
         </span> 
        
         <?php echo "<img src='".$row['photo']."' width='240' height='240'/>"; ?>      
